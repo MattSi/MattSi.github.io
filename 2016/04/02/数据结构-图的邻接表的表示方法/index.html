@@ -3,14 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Matt Si Blog</title>
+  <title>数据结构-图的邻接表的表示方法 | Matt Si Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Matt Si Blog">
-<meta property="og:url" content="https://MattSi.github.io/index.html">
+  <meta name="description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。
+选几小段分析一下：
+12345678910111213141516171819202122232425262728293031323334struct successors&amp;#123;	int d; /* number of succe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构-图的邻接表的表示方法">
+<meta property="og:url" content="https://MattSi.github.io/2016/04/02/数据结构-图的邻接表的表示方法/index.html">
 <meta property="og:site_name" content="Matt Si Blog">
+<meta property="og:description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。
+选几小段分析一下：
+12345678910111213141516171819202122232425262728293031323334struct successors&amp;#123;	int d; /* number of succe">
+<meta property="og:image" content="https://MattSi.github.io/images/09668a93-109d-3b2d-a7e5-d07944462a91.png">
+<meta property="og:updated_time" content="2017-04-03T18:08:03.972Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Matt Si Blog">
+<meta name="twitter:title" content="数据结构-图的邻接表的表示方法">
+<meta name="twitter:description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。
+选几小段分析一下：
+12345678910111213141516171819202122232425262728293031323334struct successors&amp;#123;	int d; /* number of succe">
+<meta name="twitter:image" content="https://MattSi.github.io/images/09668a93-109d-3b2d-a7e5-d07944462a91.png">
   
     <link rel="alternate" href="/atom.xml" title="Matt Si Blog" type="application/atom+xml">
   
@@ -63,9 +75,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-数据结构-图的邻接表的表示方法" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-数据结构-图的邻接表的表示方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/02/数据结构-图的邻接表的表示方法/" class="article-date">
   <time datetime="2016-04-02T01:41:30.000Z" itemprop="datePublished">2016-04-02</time>
@@ -78,8 +88,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/02/数据结构-图的邻接表的表示方法/">数据结构-图的邻接表的表示方法</a>
+    <h1 class="article-title" itemprop="name">
+      数据结构-图的邻接表的表示方法
     </h1>
   
 
@@ -114,118 +124,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-记一次生产环境性能问题的分析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/01/记一次生产环境性能问题的分析/" class="article-date">
-  <time datetime="2016-04-01T00:01:24.000Z" itemprop="datePublished">2016-04-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/性能调优/">性能调优</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/01/记一次生产环境性能问题的分析/">记一次生产环境性能问题的分析</a>
-    </h1>
+    <a href="/2016/04/01/记一次生产环境性能问题的分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">记一次生产环境性能问题的分析</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>生产环境上有个调用很频繁的service，性能不太好。表现为平均500次调用有5，6次极慢以至于客户端超时，也就是说失败率为百分之一。在高并发的情况下尤其明显。</p>
-<p>这个问题摆到了我的面前。暂且叫这个service为A吧</p>
-<p>还有什么办法，从日志入手吧。</p>
-<ul>
-<li><p>首先，从海量日志中过滤出有关A的调用，方法很多，我用了vim中的正则表达式匹配，这个问题按下不表，以后有机会再专门谈正则表达式。过滤出来的日志记录了A的调用发生时间，结束时间，调用状态，SessionID等重要信息。</p>
-</li>
-<li><p>第二，分析一下吧，该服务从晚上22：15：37开始，到22：20：01结束，一共不到五分钟。</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>总调用数</td>
-<td>491</td>
-</tr>
-<tr>
-<td>平均值</td>
-<td>8.185484</td>
-</tr>
-<tr>
-<td>标准差</td>
-<td>17.575592</td>
-</tr>
-<tr>
-<td>小于5秒调用数</td>
-<td>421</td>
-</tr>
-<tr>
-<td>大于5秒调用数</td>
-<td>70</td>
-</tr>
-<tr>
-<td>失败个数</td>
-<td>6</td>
-</tr>
-<tr>
-<td>最小调用时间</td>
-<td>0.32004</td>
-</tr>
-<tr>
-<td>最大调用时间</td>
-<td>64.9905</td>
-</tr>
-</tbody>
-</table>
-<p>这不到5分钟的时间里，发生了近500次的调用，其中调用时间正常的有421次，绝大部分的调用时间都在0到2秒以内。其中有6次失败为数据库失败，出错信息为：</p>
-<p><strong> failed: [GetCustomer] failed: Timeout expired.  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached. </strong></p>
-<p>继续分析日志，可以得出，在数据库出错先后，服务调用的返回时间在30秒和60秒这个量级，远远高于正常水平。</p>
-<p><img src="/images/excel1.png" alt=""></p>
-<p>服务A的返回时间的长短和并发数量有显著的关系<br><img src="/images/excel2.png" alt=""><br>该图的横轴是时间轴，纵轴的指标有两个，蓝色代表服务执行的时间，红色代表并发量，由图上可以看到，两个阶段服务时间的延迟是由于并发量突然增大而导致。</p>
-<ul>
-<li><p>第三，分析代码, 为啥在并发量突然增大的情况下，该服务的调用时间会有指数级别的增加？还得回到代码分析。<br><img src="/images/vs1.png" alt=""></p>
-<p>这段代码首先关闭当前的Customer，在根据已经有的参数重新装入。此处用了C#锁的机制，根据UserId和CustomerId来限制进入这段代码的线程数量。但由于不同的User打开的Customer不一定相同，所以应该不能限制访问该代码的线程数量，于是大量的数据库请求涌入数据库连接池。CloseCustomer与LoadCustomer都是非常费是时的操作，导致许多线程得不到数据库连接，处于等待状态，甚至超时，失败返回。</p>
-</li>
-</ul>
-<p>结论，<br>根据以上分析，我给出了两个结论</p>
-<ol>
-<li>增大数据库连接池的大小</li>
-<li>LoadCustomer不但本Service要用，其他的Service也会用到，但这段代码实在是性能瓶颈，需要重构。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://MattSi.github.io/2016/04/01/记一次生产环境性能问题的分析/" data-id="cj12eqlo70000ycukxllqdiy6" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RO5/">RO5</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
