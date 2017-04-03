@@ -3,14 +3,34 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Matt Si Blog</title>
+  <title>记一次生产环境性能问题的分析 | Matt Si Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Matt Si Blog">
-<meta property="og:url" content="https://MattSi.github.io/index.html">
+  <meta name="description" content="生产环境上有个调用很频繁的service，性能不太好。表现为平均500次调用有5，6次极慢以至于客户端超时，也就是说失败率为百分之一。在高并发的情况下尤其明显。
+这个问题摆到了我的面前。暂且叫这个service为A吧
+还有什么办法，从日志入手吧。
+
+首先，从海量日志中过滤出有关A的调用，方法很多，我用了vim中的正则表达式匹配，这个问题按下不表，以后有机会再专门谈正则表达式。过滤出来的日志记录了A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次生产环境性能问题的分析">
+<meta property="og:url" content="https://MattSi.github.io/2016/04/01/记一次生产环境性能问题的分析/index.html">
 <meta property="og:site_name" content="Matt Si Blog">
+<meta property="og:description" content="生产环境上有个调用很频繁的service，性能不太好。表现为平均500次调用有5，6次极慢以至于客户端超时，也就是说失败率为百分之一。在高并发的情况下尤其明显。
+这个问题摆到了我的面前。暂且叫这个service为A吧
+还有什么办法，从日志入手吧。
+
+首先，从海量日志中过滤出有关A的调用，方法很多，我用了vim中的正则表达式匹配，这个问题按下不表，以后有机会再专门谈正则表达式。过滤出来的日志记录了A">
+<meta property="og:image" content="https://MattSi.github.io/images/excel1.png">
+<meta property="og:image" content="https://MattSi.github.io/images/excel2.png">
+<meta property="og:image" content="https://MattSi.github.io/images/vs1.png">
+<meta property="og:updated_time" content="2017-04-03T17:28:15.827Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Matt Si Blog">
+<meta name="twitter:title" content="记一次生产环境性能问题的分析">
+<meta name="twitter:description" content="生产环境上有个调用很频繁的service，性能不太好。表现为平均500次调用有5，6次极慢以至于客户端超时，也就是说失败率为百分之一。在高并发的情况下尤其明显。
+这个问题摆到了我的面前。暂且叫这个service为A吧
+还有什么办法，从日志入手吧。
+
+首先，从海量日志中过滤出有关A的调用，方法很多，我用了vim中的正则表达式匹配，这个问题按下不表，以后有机会再专门谈正则表达式。过滤出来的日志记录了A">
+<meta name="twitter:image" content="https://MattSi.github.io/images/excel1.png">
   
     <link rel="alternate" href="/atom.xml" title="Matt Si Blog" type="application/atom+xml">
   
@@ -63,9 +83,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-记一次生产环境性能问题的分析" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-记一次生产环境性能问题的分析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/01/记一次生产环境性能问题的分析/" class="article-date">
   <time datetime="2016-04-01T00:01:24.000Z" itemprop="datePublished">2016-04-01</time>
@@ -82,8 +100,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/01/记一次生产环境性能问题的分析/">记一次生产环境性能问题的分析</a>
+    <h1 class="article-title" itemprop="name">
+      记一次生产环境性能问题的分析
     </h1>
   
 
@@ -169,10 +187,9 @@
     </footer>
   </div>
   
-</article>
-
-
+    
   
+</article>
 
 </section>
         
