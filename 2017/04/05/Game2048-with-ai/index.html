@@ -20,7 +20,7 @@
 
 换语言： Java语言虽然提供了高质量的抽象和封装，但无法控制内存的使用">
 <meta property="og:image" content="https://MattSi.github.io/images/screenshot.png">
-<meta property="og:updated_time" content="2017-04-04T09:03:03.627Z">
+<meta property="og:updated_time" content="2017-04-04T09:06:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="带AI的2048游戏">
 <meta name="twitter:description" content="去年为了锻炼java手感，写了一个2048游戏的单机版，虽然我加大了出4的概率（20%），可无奈还是一次都没有成功。冲动之下做了一个AI，已经有60%多的概率可以过关啦。
@@ -111,9 +111,9 @@
 <p>我很讨厌某些程序，每次编译都需要在网上下载几十兆上百兆的类库。所以坚持使用JDK提供的基本类库。所以，想要运行，直接ant run即可。</p>
 <p>需要改进的点：</p>
 <ul>
-<li><p>换语言： Java语言虽然提供了高质量的抽象和封装，但无法控制内存的使用。当我的搜索深度为8层是，已经使用了1.6GB的内存。计划换成C语言</p>
+<li><p>换语言： Java语言虽然提供了高质量的抽象和封装，但无法控制内存的使用。当我的搜索深度为8层时，已经使用了1.6GB的内存。计划换成C语言</p>
 </li>
-<li><p>棋盘的表示。当前的棋盘是全年开发单机版时使用的，是一个二维数组。对人来说很直观。但对于AI来讲，每次对一个局面进行评分时，都要new一个新的实例，内存消耗过大。二维数组虽然操作方便直观，可步骤很多，每秒评分400万+的局面的情况下，希望能有更少的操作带来同样的效果。计划换成 <a href="https://en.wikipedia.org/wiki/Bitboard" target="_blank" rel="external">BitBoard</a></p>
+<li><p>棋盘的表示。当前的棋盘是全年开发单机版时使用的，是一个二维数组。对人来说很直观。但对于AI来讲，每次对一个局面进行评分时，都要new一个新的实例，内存消耗过大。二维数组虽然操作方便直观，可步骤很多，每秒评判400万+的局面的情况下，希望能有更少的操作带来同样的效果。计划换成 <a href="https://en.wikipedia.org/wiki/Bitboard" target="_blank" rel="external">BitBoard</a></p>
 </li>
 </ul>
 <p>如果你对该程序感兴趣，可以在 <a href="https://github.com/MattSi/Game2048" target="_blank" rel="external">这里</a> 下载，别忘了点赞哦 ：）</p>
