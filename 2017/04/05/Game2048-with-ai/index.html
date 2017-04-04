@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>带AI的2048游戏 | Matt Si Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="去年为了锻炼java手感，写了一个2048游戏的单机版，虽然我加大了出4的概率（20%），可无奈还是一次都没有成功。冲动之下做了一个AI，已经有60%多的概率可以过关啦。
+我很讨厌某些程序，每次编译都需要在网上下载几十兆上百兆的类库。所以坚持使用JDK提供的基本类库。所以，想要运行，直接ant run即可。
+需要改进的点：
+
+换语言： Java语言虽然提供了高质量的抽象和封装，但无法控制内存的使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="带AI的2048游戏">
+<meta property="og:url" content="https://MattSi.github.io/2017/04/05/Game2048-with-ai/index.html">
+<meta property="og:site_name" content="Matt Si Blog">
+<meta property="og:description" content="去年为了锻炼java手感，写了一个2048游戏的单机版，虽然我加大了出4的概率（20%），可无奈还是一次都没有成功。冲动之下做了一个AI，已经有60%多的概率可以过关啦。
+我很讨厌某些程序，每次编译都需要在网上下载几十兆上百兆的类库。所以坚持使用JDK提供的基本类库。所以，想要运行，直接ant run即可。
+需要改进的点：
+
+换语言： Java语言虽然提供了高质量的抽象和封装，但无法控制内存的使用">
+<meta property="og:image" content="https://MattSi.github.io/images/screenshot.png">
+<meta property="og:updated_time" content="2017-04-04T09:03:03.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="带AI的2048游戏">
+<meta name="twitter:description" content="去年为了锻炼java手感，写了一个2048游戏的单机版，虽然我加大了出4的概率（20%），可无奈还是一次都没有成功。冲动之下做了一个AI，已经有60%多的概率可以过关啦。
+我很讨厌某些程序，每次编译都需要在网上下载几十兆上百兆的类库。所以坚持使用JDK提供的基本类库。所以，想要运行，直接ant run即可。
+需要改进的点：
+
+换语言： Java语言虽然提供了高质量的抽象和封装，但无法控制内存的使用">
+<meta name="twitter:image" content="https://MattSi.github.io/images/screenshot.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Matt Si Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Matt Si Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Something about technique, Something about life</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://MattSi.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="categories-Game2048-with-ai" class="article article-type-categories" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/05/Game2048-with-ai/" class="article-date">
+  <time datetime="2017-04-04T16:51:33.000Z" itemprop="datePublished">2017-04-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/AI/">AI</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      带AI的2048游戏
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>去年为了锻炼java手感，写了一个2048游戏的单机版，虽然我加大了出4的概率（20%），可无奈还是一次都没有成功。冲动之下做了一个AI，已经有60%多的概率可以过关啦。</p>
+<p>我很讨厌某些程序，每次编译都需要在网上下载几十兆上百兆的类库。所以坚持使用JDK提供的基本类库。所以，想要运行，直接ant run即可。</p>
+<p>需要改进的点：</p>
+<ul>
+<li><p>换语言： Java语言虽然提供了高质量的抽象和封装，但无法控制内存的使用。当我的搜索深度为8层是，已经使用了1.6GB的内存。计划换成C语言</p>
+</li>
+<li><p>棋盘的表示。当前的棋盘是全年开发单机版时使用的，是一个二维数组。对人来说很直观。但对于AI来讲，每次对一个局面进行评分时，都要new一个新的实例，内存消耗过大。二维数组虽然操作方便直观，可步骤很多，每秒评分400万+的局面的情况下，希望能有更少的操作带来同样的效果。计划换成 <a href="https://en.wikipedia.org/wiki/Bitboard" target="_blank" rel="external">BitBoard</a></p>
+</li>
+</ul>
+<p>如果你对该程序感兴趣，可以在 <a href="https://github.com/MattSi/Game2048" target="_blank" rel="external">这里</a> 下载，别忘了点赞哦 ：）</p>
+<p><img src="/images/screenshot.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://MattSi.github.io/2017/04/05/Game2048-with-ai/" data-id="cj13biolc0000o4ukcd7wx9s4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/02/数据结构-图的邻接表的表示方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">数据结构-图的邻接表的表示方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/性能调优/">性能调优</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C语言/">C语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RO5/">RO5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/04/05/Game2048-with-ai/">带AI的2048游戏</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/02/数据结构-图的邻接表的表示方法/">数据结构-图的邻接表的表示方法</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/01/记一次生产环境性能问题的分析/">记一次生产环境性能问题的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+<div class="widget">
+	<h4>links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/MattSi" title="My Github account." target="_blank"]);">我的Github主页</a></li>
+	
+	</ul>
+</div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Matt Si<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
