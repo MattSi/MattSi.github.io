@@ -5,23 +5,17 @@
   
   <title>数据结构-图的邻接表的表示方法 | Matt Si Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。
-选几小段分析一下：
-12345678910111213141516171819202122232425262728293031323334struct successors&amp;#123;	int d; /* number of succe">
+  <meta name="description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构-图的邻接表的表示方法">
 <meta property="og:url" content="https://MattSi.github.io/2016/04/02/数据结构-图的邻接表的表示方法/index.html">
 <meta property="og:site_name" content="Matt Si Blog">
-<meta property="og:description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。
-选几小段分析一下：
-12345678910111213141516171819202122232425262728293031323334struct successors&amp;#123;	int d; /* number of succe">
+<meta property="og:description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。">
 <meta property="og:image" content="https://MattSi.github.io/images/09668a93-109d-3b2d-a7e5-d07944462a91.png">
-<meta property="og:updated_time" content="2017-04-04T03:18:45.706Z">
+<meta property="og:updated_time" content="2017-04-05T13:52:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构-图的邻接表的表示方法">
-<meta name="twitter:description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。
-选几小段分析一下：
-12345678910111213141516171819202122232425262728293031323334struct successors&amp;#123;	int d; /* number of succe">
+<meta name="twitter:description" content="普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 James Aspnes 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。">
 <meta name="twitter:image" content="https://MattSi.github.io/images/09668a93-109d-3b2d-a7e5-d07944462a91.png">
   
     <link rel="alternate" href="/atom.xml" title="Matt Si Blog" type="application/atom+xml">
@@ -98,6 +92,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>普通的数据结构教科书对邻接表的实现中规中矩，耶鲁大学教授 <a href="http://www.cs.yale.edu/homes/aspnes/" target="_blank" rel="external">James Aspnes</a> 的代码显得非常油菜花，而且运用了C语言的一个称为bug的特性，不检查数组越界。</p>
+<a id="more"></a>
 <p>选几小段分析一下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> successors&#123;</div><div class="line">	<span class="keyword">int</span> d; <span class="comment">/* number of successors */</span></div><div class="line">	<span class="keyword">int</span> len; <span class="comment">/* number of slots in array */</span></div><div class="line">	<span class="keyword">char</span> is_sorted; <span class="comment">/* true if list is already sorted */</span></div><div class="line">	<span class="keyword">int</span> <span class="built_in">list</span> [<span class="number">1</span>]; <span class="comment">/* actual list of successors */</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> graph&#123;</div><div class="line">	<span class="keyword">int</span> n; <span class="comment">/* number of vertices */</span></div><div class="line">	<span class="keyword">int</span> m; <span class="comment">/* number of edges */</span></div><div class="line">	<span class="keyword">struct</span> successors *alist[<span class="number">1</span>];</div><div class="line">&#125;;</div><div class="line"><span class="comment">/* 由于VC不支持结构体的嵌套定义，我将struct successors从struct graph中抽取了出来 */</span></div><div class="line"><span class="comment">/* create a new graph with n vertices labeled 0..n-1 and no edges */</span></div><div class="line"><span class="function">Graph <span class="title">graph_create</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">	Graph g;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line"></div><div class="line">	g = (Graph) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> graph) + <span class="keyword">sizeof</span>(<span class="keyword">struct</span> successors *) * (n<span class="number">-1</span>));</div><div class="line">	assert(g);</div><div class="line"></div><div class="line">	g-&gt;n = n;</div><div class="line">	g-&gt;m = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++)&#123;</div><div class="line">		g-&gt;alist[i] = (<span class="keyword">struct</span> successors *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> successors));</div><div class="line">		assert(g-&gt;alist[i]);</div><div class="line"></div><div class="line">		g-&gt;alist[i]-&gt;d = <span class="number">0</span>;</div><div class="line">		g-&gt;alist[i]-&gt;len = <span class="number">1</span>;</div><div class="line">		g-&gt;alist[i]-&gt;is_sorted = <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> g;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>struct successors *alist[1] 是一个数组，该数组的类型是指向struct successors的指针，数组的元素只有一个。<br>看到这里，也许你和我一样，心中有个隐隐约约的疑问，为什么只有一个元素？？？别着急，往下看。</p>
@@ -116,7 +111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://MattSi.github.io/2016/04/02/数据结构-图的邻接表的表示方法/" data-id="cj13biolk0004o4ukzn1yt0qo" class="article-share-link">Share</a>
+      <a data-url="https://MattSi.github.io/2016/04/02/数据结构-图的邻接表的表示方法/" data-id="cj1519ita0004q4uksmst81ml" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C语言/">C语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
