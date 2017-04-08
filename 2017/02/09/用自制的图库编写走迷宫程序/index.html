@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用自制的图库编写走迷宫程序 | Matt Si Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近有点空，用我的工作语言C#造了个轮子，写了一个图库。
+作为一名职业开发者
+
+按照习惯给图库的逻辑添加了Unit Test
+为了使用这个图库，添加了一个生成迷宫并走迷宫的Windows应用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用自制的图库编写走迷宫程序">
+<meta property="og:url" content="https://MattSi.github.io/2017/02/09/用自制的图库编写走迷宫程序/index.html">
+<meta property="og:site_name" content="Matt Si Blog">
+<meta property="og:description" content="最近有点空，用我的工作语言C#造了个轮子，写了一个图库。
+作为一名职业开发者
+
+按照习惯给图库的逻辑添加了Unit Test
+为了使用这个图库，添加了一个生成迷宫并走迷宫的Windows应用。">
+<meta property="og:image" content="https://MattSi.github.io/images/g1.png">
+<meta property="og:image" content="https://MattSi.github.io/images/g2.png">
+<meta property="og:image" content="https://MattSi.github.io/images/p3.png">
+<meta property="og:updated_time" content="2017-04-08T14:21:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用自制的图库编写走迷宫程序">
+<meta name="twitter:description" content="最近有点空，用我的工作语言C#造了个轮子，写了一个图库。
+作为一名职业开发者
+
+按照习惯给图库的逻辑添加了Unit Test
+为了使用这个图库，添加了一个生成迷宫并走迷宫的Windows应用。">
+<meta name="twitter:image" content="https://MattSi.github.io/images/g1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Matt Si Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Matt Si Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Something about technique, Something about life</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://MattSi.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-用自制的图库编写走迷宫程序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/09/用自制的图库编写走迷宫程序/" class="article-date">
+  <time datetime="2017-02-08T22:10:26.000Z" itemprop="datePublished">2017-02-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用自制的图库编写走迷宫程序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近有点空，用我的工作语言C#造了个轮子，写了一个图库。</p>
+<p>作为一名职业开发者</p>
+<ul>
+<li>按照习惯给图库的逻辑添加了Unit Test</li>
+<li>为了使用这个图库，添加了一个生成迷宫并走迷宫的Windows应用。</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IGraph</span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">VerticesNum</span>(<span class="params"></span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">EdgeNum</span>(<span class="params"></span>)</span>;</div><div class="line">    <span class="function">Edge <span class="title">FirstEdge</span>(<span class="params"><span class="keyword">int</span> oneVertex</span>)</span>;</div><div class="line">    <span class="function">Edge <span class="title">NextEdge</span>(<span class="params">Edge preEdge</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetEdge</span>(<span class="params"><span class="keyword">int</span> fromVertex, <span class="keyword">int</span> toVertex, <span class="keyword">int</span> weight</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">DelEdge</span>(<span class="params"><span class="keyword">int</span> fromVertex, <span class="keyword">int</span> toVertex</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">IsEdge</span>(<span class="params">Edge oneEdge</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">FromVertex</span>(<span class="params">Edge oneEdge</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ToVertex</span>(<span class="params">Edge oneEdge</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Weight</span>(<span class="params">Edge oneEdge</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">IsConnected</span>(<span class="params"><span class="keyword">int</span> fromVertex, <span class="keyword">int</span> toVertex</span>)</span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">GetDegree</span>(<span class="params"><span class="keyword">int</span> oneVertex</span>)</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码结构是一个抽象类Graph实现了IGraph接口。GraphL代表邻接表，GraphM代表邻接矩阵，都继承自Graph，两种表示各有优势，详情参考任何一本数据结构教材。</p>
+<p><img src="/images/g1.png" alt=""><br><img src="/images/g2.png" alt=""></p>
+<p>在工具类中，实现了</p>
+<ul>
+<li>深度优先搜索框架</li>
+<li>宽度优先搜索框架</li>
+<li>UnionSet并查集框架（用于判断连通性）</li>
+<li>顶点的距离框架</li>
+</ul>
+<p>迷宫的生成，我设计了一个SquireGridGraph的数据结构，它也是一个Graph，代表了一个顶点集的矩阵。</p>
+<p>一个迷宫实际上是一个二位矩阵，这个矩阵上的每一点都可以用图的顶点来表示，一个可以走的迷宫可以看作Point(0,0)到Point(X,Y)之间有一条或多条通路。</p>
+<p>生成迷宫可以用所谓的随机拆墙法，初始状态，没个点之间都有墙，可以看作不联通。我们随机拆掉一些墙，用UnionSet数据结构来判断Point(0,0)和Point(X,Y)之间是不是联通，如果是，则说明迷宫造好了。</p>
+<p>走迷宫实质上是找一条Point(0,0)和Point(X,Y)的通路。方法很多，什么Dijkstra，Bellman-Ford等等，我选择了一种在游戏中经常使用的 <a href="https://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank" rel="external">A* Search</a> </p>
+<p>代码在 <a href="https://github.com/MattSi/Maze" target="_blank" rel="external">这里</a></p>
+<p><img src="/images/p3.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://MattSi.github.io/2017/02/09/用自制的图库编写走迷宫程序/" data-id="cj19cbnfe0001h8uk92q1glxt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/05/Game2048-with-ai/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          带AI的2048游戏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/02/数据结构-图的邻接表的表示方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">数据结构-图的邻接表的表示方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/性能调优/">性能调优</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C语言/">C语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RO5/">RO5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/04/05/Game2048-with-ai/">带AI的2048游戏</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/09/用自制的图库编写走迷宫程序/">用自制的图库编写走迷宫程序</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/02/数据结构-图的邻接表的表示方法/">数据结构-图的邻接表的表示方法</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/01/记一次生产环境性能问题的分析/">记一次生产环境性能问题的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+<div class="widget">
+	<h4>links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/MattSi" title="My Github account." target="_blank"]);">我的Github主页</a></li>
+	
+	</ul>
+</div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Matt Si<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
