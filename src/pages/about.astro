@@ -1,35 +1,20 @@
 ---
-// About tab: introduction, languages, skills and contact. Text comes from src/site.config.ts.
+// About tab: introduction, story, skills and contact.
+// Text comes from src/site.config.ts and src/about.md.
 import Layout from '../layouts/Layout.astro';
-import { site, languageColors, languageStrip, skills } from '../site.config';
+import { site, skills } from '../site.config';
+import { Content as Story } from '../about.md';
 ---
 
 <Layout title="About" description={site.lede}>
   <header class="hero">
-    <div class="who">
-      <span class="label">{site.role}</span>
-      <span class="handle">{site.handle}</span>
-    </div>
     <h1>{site.name}</h1>
-    <p class="lede">
-      {site.lede} My work history is on <a href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>.
-    </p>
-    <div class="cta">
-      <a class="btn primary" href="/">See my portfolio</a>
-      <a class="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="#contact">Contact</a>
-    </div>
-    <div class="langs" aria-label="Languages across public repositories">
-      {
-        languageStrip.map((l) => (
-          <span>
-            <i class="dot" style={`background:${languageColors[l.name]}`} />
-            <b>{l.name}</b> {l.note}
-          </span>
-        ))
-      }
-    </div>
+    <p class="lede">{site.lede}</p>
   </header>
+
+  <section id="story" class="prose story">
+    <Story />
+  </section>
 
   <section id="skills">
     <div class="sec-head">

@@ -9,16 +9,18 @@ export const site = {
   role: 'Software Engineer · Canada',
   handle: 'github.com/MattSi',
 
-  // Intro paragraph under the name. Plain text; the LinkedIn link is added at the end.
+  // Intro paragraph under the name on the About tab. Plain text.
+  // The longer story below it is in src/about.md.
   lede:
-    "I'm a software engineer in Canada. I build web apps, desktop tools, real-time renderers and ML pipelines, " +
-    'and I measure what I ship: a Rails dashboard query I made about 900× faster, a C++ OpenGL renderer written ' +
-    'from scratch, a defect detector that beats its baseline. Every project below is public, documented and runs ' +
-    'from a fresh clone.',
+    "Hi, I'm Matt. I find out why software is slow, broken or confusing, and then I fix the cause. " +
+    "I've spent 15+ years building systems for banks, trading desks and a delivery giant, " +
+    "and these days I'm teaching computers to spot defects in photos.",
 
   email: 'mian.si@gmail.com',
   github: 'https://github.com/MattSi',
   linkedin: 'https://www.linkedin.com/in/mian-si-077bb921/',
+  // Resume icon in the top bar. Replace public/resume.pdf to update it; set to '' to hide the icon.
+  resume: '/resume.pdf',
 
   // Portfolio tab (home page) heading and intro.
   portfolioHeading: 'Portfolio',
@@ -46,17 +48,6 @@ export const languageColors: Record<string, string> = {
   GDScript: 'var(--l-gd)',
   C: 'var(--l-c)',
 };
-
-// The row of languages under the intro.
-export const languageStrip = [
-  { name: 'Ruby', note: 'Rails 8' },
-  { name: 'C++', note: 'OpenGL' },
-  { name: 'Python', note: 'PyTorch, Whisper' },
-  { name: 'C#', note: 'Unity 6' },
-  { name: 'Java', note: 'Swing' },
-  { name: 'GDScript', note: 'Godot 4' },
-  { name: 'C', note: '' },
-];
 
 // "Skills, with evidence". Each link points to a project page (/projects/<file name>/) or any URL.
 export const skills = [
