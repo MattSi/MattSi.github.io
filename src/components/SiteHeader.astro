@@ -1,0 +1,26 @@
+---
+// Top bar on every page: name on the left, tabs on the right.
+// To add a tab, add an entry to `tabs` in src/site.config.ts.
+import { site, tabs } from '../site.config';
+
+const path = Astro.url.pathname;
+// A tab is active on its own page and on every page under it.
+// Portfolio ("/") also owns the project pages under /projects/.
+const isActive = (href: string, match?: string[]) =>
+  href === '/' ? path === '/' || (match ?? []).some((m) => path.startsWith(m)) : path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="/">{site.shortName}</a>
+    <nav aria-label="Main">
+      {
+        tabs.map((t) => (
+          <a href={t.href} class:list={['tab', { active: isActive(t.href, t.match) }]} aria-current={isActive(t.href, t.match) ? 'page' : undefined}>
+            {t.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

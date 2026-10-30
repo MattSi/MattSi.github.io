@@ -1,0 +1,93 @@
+---
+// One page per featured project, built from src/content/projects/<slug>.md(x).
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Figure from '../../components/Figure.astro';
+import FigureRow from '../../components/FigureRow.astro';
+import Kpis from '../../components/Kpis.astro';
+import Bench from '../../components/Bench.astro';
+import Table from '../../components/Table.astro';
+
+export async function getStaticPaths() {
+  const featured = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order);
+  return featured.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, next: featured[i + 1] },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  next?: CollectionEntry<'projects'>;
+}
+
+const { project, next } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const hero = d.hero ?? d.cover;
+---
+
+<Layout title={d.title} description={d.tagline ?? d.summary} image={hero}>
+  <article class="detail">
+    <a class="back" href="/#work">← All projects</a>
+    <div class="d-head">
+      {d.eyebrow && <span class="label">{d.eyebrow}</span>}
+      <h1>{d.title}</h1>
+      {d.tagline && <p>{d.tagline}</p>}
+    </div>
+
+    <div class="d-top">
+      {
+        hero && (
+          <figure class="d-pic">
+            <img src={hero} alt={d.heroAlt ?? d.coverAlt} />
+            {d.heroCaption && <figcaption set:html={d.heroCaption} />}
+          </figure>
+        )
+      }
+      <div class="d-side">
+        {
+          d.facts.length > 0 && (
+            <dl class="facts">
+              {d.facts.map((f) => (
+                <div>
+                  <dt>{f.label}</dt>
+                  <dd>{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+        {
+          (d.demo || d.source) && (
+            <div class="d-actions">
+              {d.demo && (
+                <a class="btn primary" href={d.demo} target="_blank" rel="noopener">
+                  {d.demoLabel} ↗
+                </a>
+              )}
+              {d.source && (
+                <a class:list={['btn', { primary: !d.demo }]} href={d.source} target="_blank" rel="noopener">
+                  GitHub Source ↗
+                </a>
+              )}
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="prose">
+      <Content components={{ table: Table, Figure, FigureRow, Kpis, Bench }} />
+    </div>
+
+    <p class="next">
+      {next ? (
+        <>Next project: <a href={`/projects/${next.id}/`}>{next.data.title} →</a></>
+      ) : (
+        <>Back to <a href="/#work">all projects →</a></>
+      )}
+    </p>
+  </article>
+</Layout>

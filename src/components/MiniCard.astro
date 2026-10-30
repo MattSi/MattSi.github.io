@@ -1,0 +1,33 @@
+---
+// Small card under "More projects". These projects have no page of their own.
+import type { CollectionEntry } from 'astro:content';
+import { languageColors } from '../site.config';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, language, meta, summary, cover, coverAlt, demo, source } = project.data;
+---
+
+<div class="card">
+  <div class="meta">
+    {
+      language && (
+        <span class="lang">
+          <i class="dot" style={`background:${languageColors[language] ?? 'var(--muted)'}`} />
+          {language}
+        </span>
+      )
+    }
+    {meta && <span>{meta}</span>}
+  </div>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  {cover && <img src={cover} alt={coverAlt} loading="lazy" decoding="async" />}
+  <div class="links">
+    {demo && <a href={demo} target="_blank" rel="noopener">Play ↗</a>}
+    {source && <a href={source} target="_blank" rel="noopener">Source ↗</a>}
+  </div>
+</div>

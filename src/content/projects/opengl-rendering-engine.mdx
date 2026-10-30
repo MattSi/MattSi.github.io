@@ -1,0 +1,47 @@
+---
+title: OpenGL Rendering Engine
+featured: true
+order: 2
+kind: Rendering · C++17 / OpenGL
+summary: A real-time 3D renderer from scratch with GPU instancing and ten post-processing passes.
+cover: /images/projects/opengl-card.webp
+eyebrow: Real-time rendering · C++
+tagline: A real-time 3D rendering engine written from scratch in C++17 and OpenGL 3.3 core profile, with its own scene system.
+hero: /images/projects/opengl.webp
+heroAlt: "OpenGL Rendering Engine icon: a glass tile with GL inside a gear, half drawn as a wireframe mesh"
+facts:
+  - { label: Type, value: Real-time 3D rendering engine }
+  - { label: Language, value: "C++17, GLSL" }
+  - { label: Libraries, value: "OpenGL 3.3 core, SDL2, GLEW, Dear ImGui" }
+  - { label: Platform, value: "Windows, Visual Studio 2022" }
+  - { label: Status, value: Source with demo GIFs }
+source: https://github.com/MattSi/OpenGL-RenderingEngine
+---
+
+## Summary
+
+The renderer is built around a component-based scene system loaded from JSON, a Blinn-Phong renderer with normal mapping, GPU-side procedural instancing, and a chain of ten screen-space post-processing effects that can be toggled and tuned live.
+
+## Highlights
+
+- Procedural instancing with no per-instance buffer: an integer hash of the instance ID sets position, height, rotation and scale in the vertex shader.
+- The scene renders into an RGBA16F framebuffer, then ping-pong passes: fog, depth of field, edge detection, color grading, water distortion and more.
+- Lighting with 1 directional, up to 8 point and 8 spot lights; diffuse, specular, emission and tangent-space normal maps.
+- A reflection-style type registry creates components by class name from scene files.
+- Missing licensed assets fall back to CC0 models and a procedural nebula sky, so a fresh clone still runs.
+
+## In the renderer
+
+<Figure
+  src="/images/projects/opengl-hero.webp"
+  alt="Rendered scene: a fighter craft, an instanced school of fish and asteroids in front of a planet, with the post-process panel open"
+  caption="The fish and asteroids are each one draw call; positions come from <code>gl_InstanceID</code>."
+/>
+
+## Post-processing
+
+<Figure
+  src="/images/projects/opengl-postprocess.webp"
+  alt="Post-processing passes applied to the scene: grayscale, inversion, edge detection, fog and depth of field"
+  caption="Every pass can be toggled and tuned in the ImGui panel."
+/>

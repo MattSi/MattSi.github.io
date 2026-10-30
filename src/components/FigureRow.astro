@@ -1,0 +1,15 @@
+---
+// Two figures side by side (stacked on phones), with one caption under both. Use in .mdx files:
+//   <FigureRow caption="Shared caption.">
+//     <Figure src="..." alt="..." />
+//     <Figure src="..." alt="..." />
+//   </FigureRow>
+interface Props {
+  caption?: string;
+}
+
+const { caption } = Astro.props;
+---
+
+<div class="fig-row"><slot /></div>
+{caption && <p class="figcap" set:html={caption} />}

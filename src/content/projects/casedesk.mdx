@@ -1,0 +1,49 @@
+---
+title: CaseDesk
+featured: true
+order: 3
+kind: Web app · Rails 8 · Live demo
+summary: Case management for law firms, modelled on Clio's Today page. Its main query went from 358 ms to 0.4 ms.
+cover: /images/projects/casedesk-card.webp
+eyebrow: Web app · Ruby on Rails
+tagline: A case management app for law firms, modelled on the Today page in Clio. Not affiliated with Clio.
+hero: /images/projects/casedesk.webp
+heroAlt: "CaseDesk law firm logo: a shield with the scales of justice above a courthouse"
+heroCaption: Law firm logo used for the CaseDesk project.
+facts:
+  - { label: Type, value: Multi-tenant web app }
+  - { label: Language, value: Ruby 3.4 }
+  - { label: Stack, value: "Rails 8, Hotwire (Turbo, Stimulus), Tailwind CSS, MySQL 8" }
+  - { label: Testing, value: "Minitest, RuboCop, Brakeman" }
+  - { label: Delivery, value: "GitHub Actions CI, Docker, Kamal" }
+  - { label: Status, value: Live demo online }
+demo: https://casedesk-mattsi.duckdns.org
+source: https://github.com/MattSi/casedesk
+---
+
+## Summary
+
+Lawyers start their day on one screen: what is overdue, and what is coming up this week. CaseDesk rebuilds that Today page. Overdue tasks sit in a Top priority list, followed by the next seven days of tasks and calendar events grouped by day.
+
+The work went into the parts a real product needs: keeping each firm's data separate, getting "today" right in every firm's time zone, and keeping the page fast when a user has tens of thousands of tasks.
+
+## Highlights
+
+- Multi-tenant by design. Every lookup goes through the signed-in user (`Current.user.assigned_tasks.find`), so one firm can never load another firm's data.
+- Per-firm time zones decide what counts as "today" and "overdue", and how days are grouped.
+- Mark complete without a reload: a Turbo Stream removes the card and shows "Nothing overdue" when the last one is gone.
+- Tests for models, controllers and helpers run on GitHub Actions with RuboCop and Brakeman.
+
+## Performance
+
+Benchmarked with 1M tasks and 200K calendar events. The busiest user has about 70K tasks, most of them completed.
+
+<Bench
+  title="Median of 20 runs · one shared scale, 377 ms = full width"
+  rows={[
+    { name: 'Top priority (10 oldest overdue tasks)', before: 358, after: 0.4 },
+    { name: 'Upcoming tasks (next 7 days)', before: 377, after: 4.1 },
+    { name: 'Upcoming events (next 7 days)', before: 10.5, after: 1.1 },
+  ]}
+  note="MySQL used the single-column <code>assignee_id</code> index, read about 140K rows, filtered out 97% and sorted the rest. A composite index on <code>(assignee_id, status, due_at)</code> jumps straight to the user's open tasks, already sorted, and stops at <code>LIMIT 10</code>."
+/>

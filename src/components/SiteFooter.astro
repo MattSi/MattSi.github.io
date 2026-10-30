@@ -1,0 +1,15 @@
+---
+import { site } from '../site.config';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>© {year} {site.shortName}</span>
+    <span class="foot-links">
+      <a href={`mailto:${site.email}`}>Email</a>
+      <a href={site.github} target="_blank" rel="noopener">GitHub</a>
+      <a href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+    </span>
+  </div>
+</footer>

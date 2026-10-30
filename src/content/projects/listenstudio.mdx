@@ -1,0 +1,39 @@
+---
+title: ListenStudio
+featured: true
+order: 4
+kind: Desktop app · Python / Whisper
+summary: English listening and speaking practice with transcription and pronunciation checks.
+cover: /images/projects/listenstudio-card.webp
+eyebrow: Desktop app · Python
+tagline: A desktop app for practising English listening and speaking, with an English and Chinese interface.
+hero: /images/projects/listenstudio.webp
+heroAlt: "ListenStudio icon: headphones around a sound wave with a play button"
+facts:
+  - { label: Type, value: Desktop app }
+  - { label: Language, value: Python 3.10+ }
+  - { label: Libraries, value: "Tk, faster-whisper, PyAV, Edge TTS, Kokoro" }
+  - { label: Platform, value: "Windows, macOS (app built in GitHub Actions)" }
+  - { label: Interface, value: English and Chinese }
+source: https://github.com/MattSi/ListenStudio
+---
+
+## Summary
+
+Drop in any audio or video file to transcribe it with Whisper, then listen to it sentence by sentence. Or write your own text, hear it read aloud by a neural voice, record yourself, and compare your pronunciation with the reference sentence by sentence.
+
+## Highlights
+
+- Sentence splitting sets its silence threshold from each recording's noise floor.
+- Transcription runs on a worker thread with pause and cancel; long recordings stream to disk instead of memory.
+- Pronunciation check aligns your Whisper transcript with the text word by word and marks skipped and misread words.
+- Speed change without pitch shift, and a limiter on volume boost so loud parts never clip.
+- Online neural voices with an offline fallback model.
+
+## In the app
+
+<Figure
+  src="/images/projects/listenstudio-listening.webp"
+  alt="ListenStudio intensive listening tab showing one sentence at a time with its waveform"
+  caption="Intensive listening: one sentence at a time, split at the silences."
+/>

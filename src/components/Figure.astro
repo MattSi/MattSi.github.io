@@ -1,0 +1,18 @@
+---
+// An image with an optional caption. Use in .mdx files:
+//   <Figure src="/images/projects/foo.webp" alt="What the image shows" caption="Optional caption." />
+// narrow: keep the image at a smaller width (good for square charts).
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  narrow?: boolean;
+}
+
+const { src, alt, caption, narrow = false } = Astro.props;
+---
+
+<figure class:list={['d-pic', { narrow }]}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  {caption && <figcaption set:html={caption} />}
+</figure>

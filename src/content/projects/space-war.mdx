@@ -1,0 +1,34 @@
+---
+title: Space War
+featured: true
+order: 5
+kind: 2D game · Godot 4 · Playable
+summary: A 2D platform shooter with 16-direction aiming and checkpoints, playable in the browser.
+cover: /images/projects/space-war-card.webp
+eyebrow: 2D game · Godot
+tagline: A 2D platform shooter made with Godot 4, playable in the browser with a keyboard or a gamepad.
+hero: /images/projects/space-war.webp
+heroAlt: "Space War cover art: a pixel-art astronaut firing at alien ships above a red rocky ground"
+facts:
+  - { label: Type, value: 2D platform shooter }
+  - { label: Engine, value: Godot 4.7 }
+  - { label: Language, value: "GDScript, about 1,100 lines" }
+  - { label: Input, value: "Keyboard, gamepad" }
+  - { label: Status, value: Playable in Chrome or Edge on desktop }
+demo: https://mattsi.github.io/space-war-web/
+demoLabel: Live Demo · Play in browser
+source: https://github.com/MattSi/space-war
+---
+
+## Summary
+
+Run, jump and shoot through two levels to reach the goal. You have five health points, and touching a checkpoint lets you restart there when you die. Hold aim to stand still and shoot in any of 16 directions.
+
+## Highlights
+
+- Responsive movement: double jump, jump height that follows how long you hold the button, and a short grace time at ledges.
+- Each game object (player, enemy, bullet, checkpoint, goal) is its own small scene, and levels are built by placing them.
+- Signals (observer pattern): the player emits events like `died` and `health_changed`, and the HUD and game manager react.
+- Enemies run a state machine, for example `PATROL → CHASE → DIVE → DEAD`.
+- A shared `take_damage()` method lets one bullet type hit the player and every enemy.
+- Checkpoints survive a level reload, and keyboard and gamepad share the same input actions.

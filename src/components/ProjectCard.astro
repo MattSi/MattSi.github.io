@@ -1,0 +1,20 @@
+---
+// Card in the "Featured projects" grid. Links to the project's own page.
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, kind, summary, cover, coverAlt } = project.data;
+---
+
+<a class="pcard" href={`/projects/${project.id}/`}>
+  <div class="thumb">{cover && <img src={cover} alt={coverAlt} loading="lazy" decoding="async" />}</div>
+  <div class="body">
+    {kind && <span class="kind">{kind}</span>}
+    <h3>{title}</h3>
+    <p>{summary}</p>
+  </div>
+</a>

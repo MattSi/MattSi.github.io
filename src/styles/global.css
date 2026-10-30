@@ -1,0 +1,267 @@
+/* Colors, fonts and layout for the whole site.
+   Change the tokens in :root to restyle everything; the dark-mode blocks only override colors. */
+:root {
+  --bg: #F3F5F4; --surface: #FFFFFF; --ink: #16201D; --muted: #5A6863; --line: #D9E0DD;
+  --accent: #2747C9; --accent-soft: #E4E9FB; --good: #17845A; --bad: #B4332E;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --l-ruby: #B4332E; --l-cpp: #E05B8A; --l-py: #3572A5; --l-cs: #178600; --l-java: #B07219; --l-gd: #355570; --l-c: #6E7781;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1312; --surface: #161D1B; --ink: #E5ECE9; --muted: #97A7A1; --line: #28322F;
+    --accent: #93A9FF; --accent-soft: #1D2547; --good: #4FCB93; --bad: #F08A84;
+    --l-gd: #6E9CC4; --l-c: #9AA3AC;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1312; --surface: #161D1B; --ink: #E5ECE9; --muted: #97A7A1; --line: #28322F;
+  --accent: #93A9FF; --accent-soft: #1D2547; --good: #4FCB93; --bad: #F08A84;
+  --l-gd: #6E9CC4; --l-c: #9AA3AC;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+img { max-width: 100% }
+.wrap { max-width: 1040px; margin: 0 auto }
+a { color: var(--accent); text-underline-offset: 3px }
+a:focus-visible, .btn:focus-visible, .pcard:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.1 }
+.mono { font-family: var(--mono) }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none }
+code { font-family: var(--mono); font-size: .88em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; cursor: pointer; font-family: var(--body);
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg) }
+.btn:hover { border-color: var(--accent) }
+.btn.small { padding: 4px 10px; font-size: 13px }
+.cta { display: flex; gap: 12px; flex-wrap: wrap }
+
+/* Top bar with tabs */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px));
+}
+.site-header .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px }
+.brand { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--ink); text-decoration: none; letter-spacing: -.01em }
+.site-header nav { display: flex; gap: 4px }
+.tab {
+  font-size: 15px; font-weight: 500; color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 8px;
+  position: relative;
+}
+.tab:hover { color: var(--ink); background: var(--accent-soft) }
+.tab.active { color: var(--ink) }
+.tab.active::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -11px; height: 2px; background: var(--accent); border-radius: 2px }
+.tab:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+
+.site-footer { margin-top: 72px; border-top: 1px solid var(--line) }
+.site-footer .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; padding-block: 24px 32px; font-size: 14px; color: var(--muted) }
+.foot-links { display: flex; gap: 18px }
+
+/* Page heading for Portfolio and Posts */
+.page-head { padding-block: 56px 8px; display: grid; gap: 14px }
+.page-head h1 { font-size: clamp(36px, 6vw, 60px); font-weight: 800; letter-spacing: -.02em }
+.page-head .lede { font-size: clamp(17px, 2vw, 20px); max-width: 62ch; margin: 0 }
+.page-head + section { padding-top: 40px }
+
+/* Hero */
+header.hero { padding-block: 72px 40px; display: grid; gap: 28px }
+.hero .who { display: flex; align-items: center; gap: 16px; flex-wrap: wrap }
+.hero .handle { font-family: var(--mono); font-size: 14px; color: var(--muted) }
+.hero h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 800; letter-spacing: -.02em }
+.hero p.lede { font-size: clamp(18px, 2.2vw, 21px); max-width: 62ch; margin: 0 }
+.langs { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-block: 18px; border-block: 1px solid var(--line) }
+.langs span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 13px; color: var(--muted) }
+.langs b { color: var(--ink); font-weight: 500 }
+
+section { padding-block: 56px 8px }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px }
+.sec-head h2 { font-size: clamp(26px, 3.6vw, 34px); font-weight: 700 }
+
+/* Featured project cards */
+.pgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px }
+.pcard {
+  display: grid; grid-template-rows: auto 1fr; text-decoration: none; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden; transition: border-color .15s, transform .15s;
+}
+.pcard:hover { border-color: var(--accent); transform: translateY(-2px) }
+.pcard .thumb { aspect-ratio: 16/10; max-width: 100%; overflow: hidden; background: var(--accent-soft); border-bottom: 1px solid var(--line) }
+.pcard .thumb img { width: 100%; height: 100%; object-fit: cover; display: block }
+.pcard .body { padding: 14px 16px 16px; display: grid; gap: 6px; align-content: start }
+.pcard h3 { font-size: 20px; font-weight: 700 }
+.pcard .kind { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .04em; text-transform: uppercase }
+.pcard p { margin: 0; font-size: 14.5px; color: var(--muted) }
+
+/* Small project cards */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 8px; align-content: start; min-width: 0 }
+.card h3 { font-size: 19px; font-weight: 700 }
+.card p { margin: 0; font-size: 14.5px; color: var(--muted) }
+.card img { display: block; width: 100%; height: auto; aspect-ratio: 792/560; object-fit: cover; border-radius: 6px; border: 1px solid var(--line) }
+.meta { display: flex; gap: 10px 14px; flex-wrap: wrap; align-items: center; font-family: var(--mono); font-size: 13px; color: var(--muted) }
+.meta .lang { display: inline-flex; align-items: center; gap: 6px }
+.links { display: flex; gap: 8px 18px; flex-wrap: wrap; font-size: 14px; font-weight: 500 }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; margin: 0 }
+.skill { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding-block: 14px; border-top: 1px solid var(--line) }
+.skill dt { font-weight: 600 }
+.skill dd { margin: 0; color: var(--muted); font-size: 15px; min-width: 0 }
+.skill dd a { font-family: var(--mono); font-size: 13px }
+
+/* Contact (About tab) */
+.contact-sec { padding-block: 64px 24px; margin-top: 56px; border-top: 1px solid var(--line); display: grid; gap: 14px }
+.contact-sec h2 { font-size: clamp(26px, 3.6vw, 34px) }
+.contact-sec > p { margin: 0; color: var(--muted); max-width: 60ch }
+.contact { margin: 8px 0 0; display: grid; max-width: 620px }
+.contact > div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; padding-block: 12px; border-top: 1px solid var(--line) }
+.contact dt { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.contact dd { margin: 0; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; overflow-wrap: anywhere }
+.contact .mono { font-size: 15px; user-select: all }
+
+/* Project page */
+.detail { padding-block: 28px 24px }
+.back { display: inline-flex; gap: 6px; font-size: 15px; font-weight: 500; text-decoration: none; margin-bottom: 28px }
+.d-head { display: grid; gap: 10px; margin-bottom: 28px }
+.d-head h1 { font-size: clamp(36px, 6vw, 60px); font-weight: 800; letter-spacing: -.02em }
+.d-head p { margin: 0; font-size: clamp(17px, 2vw, 20px); max-width: 60ch }
+.d-top { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; align-items: start }
+.d-pic { margin: 0; min-width: 0 }
+.d-pic img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line) }
+.d-pic figcaption { font-size: 13px; color: var(--muted); margin-top: 8px }
+.facts { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 6px 20px; margin: 0 }
+.facts > div { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding-block: 12px; border-top: 1px solid var(--line) }
+.facts > div:first-child { border-top: 0 }
+.facts dt { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: 2px }
+.facts dd { margin: 0; font-size: 15px; min-width: 0 }
+.d-side { display: grid; gap: 16px; align-content: start; min-width: 0 }
+.d-actions { display: flex; flex-wrap: wrap; gap: 10px }
+.d-actions .btn { flex: 1 1 auto; justify-content: center; font-size: 16px; padding: 12px 18px }
+.next { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 15px }
+.next p { margin: 0 0 6px }
+
+/* Markdown body of a project page.
+   Text stays at a comfortable reading width; figures and figure rows can use the full width. */
+.prose { margin-top: 44px }
+.prose > :is(p, ul, ol, h2, h3, blockquote, .tbl, .kpis, .bench) { max-width: 760px }
+.prose h2 { font-size: 24px; font-weight: 700; margin: 44px 0 12px }
+.prose > h2:first-child { margin-top: 0 }
+.prose h3 { font-size: 19px; font-weight: 700; margin: 28px 0 10px }
+.prose p { margin: 0 0 12px }
+.prose ul { margin: 0 0 12px; padding: 0; list-style: none; display: grid; gap: 10px }
+.prose ul > li { position: relative; padding-left: 26px; overflow-wrap: anywhere }
+.prose ul > li::before { content: "→"; position: absolute; left: 0; top: 0; font-family: var(--mono); color: var(--accent) }
+.prose ol { margin: 0 0 12px; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 14px }
+.prose ol > li { counter-increment: step; position: relative; padding-left: 40px; overflow-wrap: anywhere }
+.prose ol > li::before {
+  content: counter(step); position: absolute; left: 0; top: 1px; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent); font-family: var(--mono); font-size: 13px; font-weight: 500; display: grid; place-items: center;
+}
+.prose > p > img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line) }
+.prose .d-pic { margin: 20px 0 0 }
+.prose .d-pic.narrow { max-width: 560px }
+.prose > .d-pic + :is(p, h2, ul, ol) { margin-top: 16px }
+
+.fig-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px }
+.fig-row .d-pic { margin: 0 }
+.fig-row + .figcap { font-size: 13px; color: var(--muted); margin-top: 8px }
+
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0 }
+.kpis > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px }
+.kpi-v { font-family: var(--display); font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums }
+.kpi-l { font-size: 13px; color: var(--muted); line-height: 1.4 }
+
+/* Tables (Markdown tables are wrapped so they can scroll on phones) */
+.tbl { overflow-x: auto; margin: 0 0 12px }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: left }
+th { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .06em }
+td:not(:first-child), th:not(:first-child) { text-align: right }
+
+/* Benchmark bars */
+.bench { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 18px; margin: 12px 0 0 }
+.bench .q { display: grid; gap: 6px }
+.bench .q-name { font-size: 14px; font-weight: 500 }
+.bar { display: grid; grid-template-columns: 56px 1fr 72px; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums }
+.bar .track { height: 10px; border-radius: 3px }
+.bar .fill { display: block; height: 100%; border-radius: 3px; min-width: 3px }
+.bar.before .fill { background: var(--muted); opacity: .55 }
+.bar.after .fill { background: var(--good) }
+.bar .v { text-align: right; color: var(--ink) }
+.bench .note { font-size: 13px; color: var(--muted); margin: 0; border-top: 1px solid var(--line); padding-top: 14px }
+
+/* Posts list */
+.post-list { list-style: none; margin: 0; padding: 0; display: grid }
+.post-item { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 8px 24px; padding-block: 22px; border-top: 1px solid var(--line) }
+.post-item:last-child { border-bottom: 1px solid var(--line) }
+.post-item time { font-family: var(--mono); font-size: 13px; color: var(--muted); padding-top: 5px; font-variant-numeric: tabular-nums }
+.post-item h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px }
+.post-item h2 a { color: var(--ink); text-decoration: none }
+.post-item h2 a:hover { color: var(--accent) }
+.post-item p { margin: 0 0 8px; color: var(--muted); max-width: 65ch }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none }
+.tags li, .tags a { font-family: var(--mono); font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); text-decoration: none }
+.empty { padding: 28px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); max-width: 640px }
+.empty p { margin: 0 }
+.draft-badge { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--bad); border: 1px solid currentColor; border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle }
+
+/* A single post */
+.post { padding-block: 28px 24px }
+.post-head { display: grid; gap: 12px; margin-bottom: 36px; max-width: 760px }
+.post-head h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -.02em }
+.post-head .desc { margin: 0; font-size: clamp(17px, 2vw, 20px); color: var(--muted) }
+.post-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-family: var(--mono); font-size: 13px; color: var(--muted) }
+.post .prose { margin-top: 0 }
+.post .prose ul > li::before { content: "•"; font-family: var(--body) }
+.post .prose blockquote { margin: 0 0 12px; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent); color: var(--muted) }
+
+/* Code blocks (Shiki). Light theme by default, dark theme in dark mode. */
+.prose pre { max-width: 860px; overflow-x: auto; padding: 16px 18px; border-radius: 10px; border: 1px solid var(--line); font-size: 14px; line-height: 1.55; margin: 0 0 16px }
+.prose pre code { background: none; padding: 0; font-size: inherit }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .astro-code,
+  :root:not([data-theme="light"]) .astro-code span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important }
+}
+:root[data-theme="dark"] .astro-code, :root[data-theme="dark"] .astro-code span { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important }
+
+@media (max-width: 860px) {
+  .pgrid, .grid { grid-template-columns: 1fr 1fr }
+  .skills { grid-template-columns: 1fr }
+  .d-top { grid-template-columns: 1fr }
+}
+@media (max-width: 700px) {
+  .fig-row, .kpis { grid-template-columns: 1fr }
+}
+@media (max-width: 560px) {
+  header.hero { padding-block: 44px 28px }
+  .pgrid, .grid { grid-template-columns: 1fr }
+  .skill { grid-template-columns: 1fr; gap: 4px }
+  .facts > div { grid-template-columns: 1fr; gap: 2px }
+  .post-item { grid-template-columns: 1fr; gap: 4px }
+  .tab { padding: 8px 9px; font-size: 14.5px }
+  .tab.active::after { left: 9px; right: 9px }
+  .brand { font-size: 18px }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bar .fill { transform-origin: left; animation: grow .9s cubic-bezier(.2, .7, .2, 1) both }
+  .bar.after .fill { animation-delay: .25s }
+  @keyframes grow { from { transform: scaleX(.02) } to { transform: scaleX(1) } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pcard { transition: none }
+  .pcard:hover { transform: none }
+}

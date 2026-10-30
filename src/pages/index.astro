@@ -1,0 +1,41 @@
+---
+// Portfolio tab (home page): featured projects, then smaller ones.
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import MiniCard from '../components/MiniCard.astro';
+import { site } from '../site.config';
+
+const all = await getCollection('projects');
+const byOrder = (a: (typeof all)[number], b: (typeof all)[number]) => a.data.order - b.data.order;
+const featured = all.filter((p) => p.data.featured).sort(byOrder);
+const more = all.filter((p) => !p.data.featured).sort(byOrder);
+---
+
+<Layout>
+  <header class="page-head">
+    <span class="label">{site.role}</span>
+    <h1>{site.portfolioHeading}</h1>
+    <p class="lede">{site.portfolioIntro} <a href="/about/">About me →</a></p>
+  </header>
+
+  <section id="work">
+    <div class="sec-head">
+      <h2>Featured projects</h2>
+      <span class="label">click a project for details</span>
+    </div>
+    <div class="pgrid">
+      {featured.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <section id="more">
+    <div class="sec-head">
+      <h2>More projects</h2>
+      <span class="label">smaller builds and earlier work</span>
+    </div>
+    <div class="grid">
+      {more.map((p) => <MiniCard project={p} />)}
+    </div>
+  </section>
+</Layout>

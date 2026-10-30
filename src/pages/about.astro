@@ -1,0 +1,102 @@
+---
+// About tab: introduction, languages, skills and contact. Text comes from src/site.config.ts.
+import Layout from '../layouts/Layout.astro';
+import { site, languageColors, languageStrip, skills } from '../site.config';
+---
+
+<Layout title="About" description={site.lede}>
+  <header class="hero">
+    <div class="who">
+      <span class="label">{site.role}</span>
+      <span class="handle">{site.handle}</span>
+    </div>
+    <h1>{site.name}</h1>
+    <p class="lede">
+      {site.lede} My work history is on <a href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="/">See my portfolio</a>
+      <a class="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="#contact">Contact</a>
+    </div>
+    <div class="langs" aria-label="Languages across public repositories">
+      {
+        languageStrip.map((l) => (
+          <span>
+            <i class="dot" style={`background:${languageColors[l.name]}`} />
+            <b>{l.name}</b> {l.note}
+          </span>
+        ))
+      }
+    </div>
+  </header>
+
+  <section id="skills">
+    <div class="sec-head">
+      <h2>Skills, with evidence</h2>
+      <span class="label">each line links to code</span>
+    </div>
+    <dl class="skills">
+      {
+        skills.map((s) => (
+          <div class="skill">
+            <dt>{s.area}</dt>
+            <dd>
+              {s.text}
+              {s.links.map((l) => (
+                <>
+                  {' · '}
+                  <a href={l.href} {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>
+                    {l.label}
+                  </a>
+                </>
+              ))}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section id="contact" class="contact-sec">
+    <span class="label">Contact</span>
+    <h2>{site.contactHeading}</h2>
+    <p>{site.contactText}</p>
+    <dl class="contact">
+      <div>
+        <dt>Email</dt>
+        <dd>
+          <span id="email" class="mono">{site.email}</span>
+          <button id="copy-email" class="btn small" type="button" data-email={site.email}>Copy</button>
+        </dd>
+      </div>
+      <div>
+        <dt>LinkedIn</dt>
+        <dd><a href={site.linkedin} target="_blank" rel="noopener">{site.linkedin.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, '')}</a></dd>
+      </div>
+      <div>
+        <dt>GitHub</dt>
+        <dd><a href={site.github} target="_blank" rel="noopener">{site.github.replace(/^https:\/\//, '')}</a></dd>
+      </div>
+    </dl>
+  </section>
+</Layout>
+
+<script>
+  const button = document.getElementById('copy-email') as HTMLButtonElement | null;
+  button?.addEventListener('click', async () => {
+    const email = button.dataset.email ?? '';
+    try {
+      await navigator.clipboard.writeText(email);
+      button.textContent = 'Copied';
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(document.getElementById('email')!);
+      const sel = getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+      button.textContent = 'Selected, press Ctrl+C';
+    }
+    setTimeout(() => (button.textContent = 'Copy'), 2000);
+  });
+</script>

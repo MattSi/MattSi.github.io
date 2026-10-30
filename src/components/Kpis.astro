@@ -1,0 +1,22 @@
+---
+// A row of headline numbers. Use in .mdx files:
+//   <Kpis items={[
+//     { value: '0.401', label: 'Two-stage COCO AP<br>baseline 0.391' },
+//   ]} />
+interface Props {
+  items: { value: string; label: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="kpis">
+  {
+    items.map((k) => (
+      <div>
+        <span class="kpi-v">{k.value}</span>
+        <span class="kpi-l" set:html={k.label} />
+      </div>
+    ))
+  }
+</div>

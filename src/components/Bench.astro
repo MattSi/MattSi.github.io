@@ -1,0 +1,40 @@
+---
+// Before/after timing bars, all drawn on one scale. Use in .mdx files:
+//   <Bench title="Median of 20 runs" unit="ms" rows={[
+//     { name: 'Top priority', before: 358, after: 0.4 },
+//   ]} note="Optional note under the bars." />
+interface Props {
+  title?: string;
+  unit?: string;
+  rows: { name: string; before: number; after: number }[];
+  note?: string;
+}
+
+const { title, unit = 'ms', rows, note } = Astro.props;
+const max = Math.max(...rows.flatMap((r) => [r.before, r.after]));
+const pct = (v: number) => `${((v / max) * 100).toFixed(2)}%`;
+const fmt = (v: number) => `${v} ${unit}`;
+const label = title ?? `One shared scale, ${fmt(max)} = full width`;
+---
+
+<div class="bench" role="img" aria-label={`Before and after: ${rows.map((r) => `${r.name} ${fmt(r.before)} to ${fmt(r.after)}`).join('; ')}`}>
+  <div class="label">{label}</div>
+  {
+    rows.map((r) => (
+      <div class="q">
+        <div class="q-name">{r.name}</div>
+        <div class="bar before">
+          <span>before</span>
+          <span class="track"><span class="fill" style={`width:${pct(r.before)}`} /></span>
+          <span class="v">{fmt(r.before)}</span>
+        </div>
+        <div class="bar after">
+          <span>after</span>
+          <span class="track"><span class="fill" style={`width:${pct(r.after)}`} /></span>
+          <span class="v">{fmt(r.after)}</span>
+        </div>
+      </div>
+    ))
+  }
+  {note && <p class="note" set:html={note} />}
+</div>

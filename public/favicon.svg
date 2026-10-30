@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    rect { fill: #2747C9 }
+    text { fill: #FFFFFF }
+    @media (prefers-color-scheme: dark) { rect { fill: #93A9FF } text { fill: #0E1312 } }
+  </style>
+  <rect width="64" height="64" rx="14" />
+  <text x="32" y="43" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="800" text-anchor="middle">MS</text>
+</svg>

@@ -1,0 +1,65 @@
+---
+// One page per post, built from src/content/posts/<slug>.md(x).
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Figure from '../../components/Figure.astro';
+import FigureRow from '../../components/FigureRow.astro';
+import Kpis from '../../components/Kpis.astro';
+import Bench from '../../components/Bench.astro';
+import Table from '../../components/Table.astro';
+import { getPosts, formatDate, isoDate, readingTime, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    // posts are newest first, so the older post comes next in the list
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const d = post.data;
+const { Content } = await render(post);
+---
+
+<Layout title={d.title} description={d.description}>
+  <article class="post">
+    <a class="back" href="/posts/">← All posts</a>
+    <header class="post-head">
+      <div class="post-meta">
+        <time datetime={isoDate(d.date)}>{formatDate(d.date)}</time>
+        {d.updated && <span>Updated {formatDate(d.updated)}</span>}
+        <span>{readingTime(post.body)}</span>
+        {d.draft && <span class="draft-badge">draft, only visible in dev</span>}
+      </div>
+      <h1>{d.title}</h1>
+      <p class="desc">{d.description}</p>
+      {
+        d.tags.length > 0 && (
+          <ul class="tags">
+            {d.tags.map((t) => (
+              <li>{t}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <div class="prose">
+      <Content components={{ table: Table, Figure, FigureRow, Kpis, Bench }} />
+    </div>
+
+    <nav class="next" aria-label="More posts">
+      {older && <p>Older: <a href={`/posts/${older.id}/`}>{older.data.title}</a></p>}
+      {newer && <p>Newer: <a href={`/posts/${newer.id}/`}>{newer.data.title}</a></p>}
+      <p><a href="/posts/">All posts →</a></p>
+    </nav>
+  </article>
+</Layout>
