@@ -1,7 +1,7 @@
 ---
 // Top bar on every page: name and role on the left, tabs and icon links on the right.
 // To add a tab, add an entry to `tabs` in src/site.config.ts.
-// The icon links (GitHub, LinkedIn, resume) come from `site` in the same file.
+// The icon links (GitHub, LinkedIn, email, resume) come from `site` in the same file.
 import { site, tabs } from '../site.config';
 
 const path = Astro.url.pathname;
@@ -21,6 +21,11 @@ const icons = [
     label: 'LinkedIn',
     href: site.linkedin,
     svg: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>',
+  },
+  {
+    label: `Email ${site.email}`,
+    href: `mailto:${site.email}`,
+    svg: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
   },
   {
     label: 'Resume (PDF)',
@@ -49,7 +54,7 @@ const icons = [
       <div class="icon-links">
         {
           icons.map((i) => (
-            <a class="icon-link" href={i.href} target="_blank" rel="noopener" aria-label={i.label} title={i.label}>
+            <a class="icon-link" href={i.href} target={i.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener" aria-label={i.label} title={i.label}>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={i.svg} />
             </a>
           ))

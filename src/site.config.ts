@@ -19,8 +19,8 @@ export const site = {
   email: 'mian.si@gmail.com',
   github: 'https://github.com/MattSi',
   linkedin: 'https://www.linkedin.com/in/matt-si/',
-  // Resume icon in the top bar. Replace public/resume.pdf to update it; set to '' to hide the icon.
-  resume: '/resume.pdf',
+  // Resume icon in the top bar: put a PDF in public/ and set its path (e.g. '/resume.pdf'). '' hides the icon.
+  resume: '',
 
   // Portfolio tab (home page) heading and intro.
   portfolioHeading: 'Portfolio',
