@@ -18,7 +18,7 @@ Everything you will normally change is plain text:
 |---|---|
 | Name, intro, Portfolio heading, contact details, skills, tabs | `src/site.config.ts` |
 | The story on the About tab ("How I got here", "How I work") | `src/about.md` |
-| Resume icon in the top bar (hidden now) | add a PDF to `public/` and set `resume` in `src/site.config.ts` |
+| Resume behind the document icon in the top bar | `public/resume.pdf` (replace the file; same name) |
 | A project (card text, page content, links) | `src/content/projects/<name>.md` or `.mdx` |
 | A post | `src/content/posts/<name>.md` or `.mdx` |
 | Images and animations | `public/images/projects/`, `public/images/posts/` |
