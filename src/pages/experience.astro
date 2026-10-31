@@ -1,0 +1,44 @@
+---
+// Experience tab: work history, newest first. The text lives in src/experience.ts.
+import Layout from '../layouts/Layout.astro';
+import { jobs } from '../experience';
+
+// Escape HTML, then turn **text** into <strong>text</strong>.
+const rich = (s: string) =>
+  s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+---
+
+<Layout title="Experience" description="Work history of Matt Si: 15+ years of software engineering in finance, logistics and applied AI.">
+  <header class="page-head">
+    <h1>Experience</h1>
+    <p class="lede">15+ years of building software for banks, trading desks, a logistics giant and, now, applied AI research.</p>
+  </header>
+
+  <section>
+    <ol class="jobs">
+      {
+        jobs.map((j) => (
+          <li class="job">
+            <div class="job-head">
+              <h2>
+                {j.title}
+                {j.org && <span class="job-org"> · {j.org}</span>}
+              </h2>
+              <span class="job-dates">{j.dates}</span>
+            </div>
+            {j.place && <p class="job-place">{j.place}</p>}
+            <ul>
+              {j.points.map((p) => (
+                <li set:html={rich(p)} />
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Layout>

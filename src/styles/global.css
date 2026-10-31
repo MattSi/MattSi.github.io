@@ -128,6 +128,18 @@ section { padding-block: 56px 8px }
 .skill dd a { font-family: var(--mono); font-size: 13px }
 
 /* Contact (About tab) */
+/* Experience tab: one block per job, title on the left, dates on the right */
+.jobs { list-style: none; margin: 0; padding: 0; max-width: 860px }
+.job { padding-block: 22px; border-top: 1px solid var(--line) }
+.job:first-child { border-top: 0; padding-top: 0 }
+.job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px }
+.job-head h2 { font-size: 19px; margin: 0; letter-spacing: -.01em }
+.job-org { font-weight: 500; color: var(--muted) }
+.job-dates { font-family: var(--mono); font-size: 13px; color: var(--muted); white-space: nowrap }
+.job-place { margin: 4px 0 0; font-size: 14px; color: var(--muted); font-style: italic }
+.job ul { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px }
+.job strong { font-weight: 600 }
+
 /* A highlighted card with big buttons, so the way to reach me is easy to spot */
 .contact-sec {
   margin-top: 56px; margin-bottom: 40px; padding: 32px; display: grid; gap: 14px;

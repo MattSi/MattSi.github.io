@@ -35,6 +35,7 @@ export const site = {
 export const tabs: { label: string; href: string; match?: string[] }[] = [
   { label: 'Portfolio', href: '/', match: ['/projects/'] },
   { label: 'About', href: '/about/' },
+  { label: 'Experience', href: '/experience/' },
   { label: 'Posts', href: '/posts/' },
 ];
 
