@@ -34,9 +34,10 @@ export const site = {
 // Tabs in the top bar. `match` marks extra paths that keep a tab highlighted.
 export const tabs: { label: string; href: string; match?: string[] }[] = [
   { label: 'Portfolio', href: '/', match: ['/projects/'] },
-  { label: 'About', href: '/about/' },
   { label: 'Experience', href: '/experience/' },
-  { label: 'Posts', href: '/posts/' },
+  { label: 'About', href: '/about/' },
+  // Posts tab is hidden until the first post is published. Add it back here:
+  // { label: 'Posts', href: '/posts/' },
 ];
 
 // Colored dots for languages. Add a language here before using it in a project file.
